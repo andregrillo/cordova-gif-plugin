@@ -13,5 +13,11 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/IndigoGifPlugin.m" />
+
+		<preference name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" default=" " />
+         <config-file target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist">
+             <string>$PHOTOLIBRARY_ADD_USAGE_DESCRIPTION</string>
+         </config-file>   
+		
 	</platform>
 </plugin>
