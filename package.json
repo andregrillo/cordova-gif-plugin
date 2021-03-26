@@ -1,0 +1,25 @@
+{
+  "name": "cordova-gif-plugin",
+  "version": "0.0.1",
+  "description": "Shares and save Gifs on iOS",
+  "cordova": {
+    "id": "cordova-gif-plugin",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andregrillo/cordova-gif-plugin.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "André Grillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andregrillo/cordova-gif-plugin/issues"
+  },
+  "homepage": "https://github.com/andregrillo/cordova-gif-plugin#readme"
+}
