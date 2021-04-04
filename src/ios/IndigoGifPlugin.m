@@ -21,7 +21,15 @@
         PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
         [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
     } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        NSLog(@"：%d",success);
+        if (error != nil) {
+            CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            return;
+        } else {
+            CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            return;
+        }
     }];
 }
 
