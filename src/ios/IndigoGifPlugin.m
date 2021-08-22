@@ -16,6 +16,8 @@
     NSString *gifPath = [command.arguments objectAtIndex:0];
     NSURL *gifURL = [NSURL URLWithString:gifPath];
     NSData *data = [NSData dataWithContentsOfURL:gifURL];
+
+    [self checkPhotoAlbumPermissions];
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
@@ -91,6 +93,52 @@
     presentingViewController = presentingViewController.presentedViewController;
   }
   return presentingViewController;
+}
+
+- (void) checkPhotoAlbumPermissions {
+  PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+  if (status == PHAuthorizationStatusAuthorized) {
+       // Access has been granted.
+  }
+  else if (status == PHAuthorizationStatusDenied) {
+       // Access has been denied.
+        [self showAlert];
+  }
+  else if (status == PHAuthorizationStatusNotDetermined) {
+       // Access has not been determined.
+       [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+           if (status == PHAuthorizationStatusAuthorized) {
+               // Access has been granted.         
+           }
+           else {
+                // Denied; show an alert
+                [self showAlert];
+           }
+       }];  
+  }
+  else if (status == PHAuthorizationStatusRestricted) {
+       // Restricted access
+  }
+}
+
+- (void) showAlert {
+  // Denied; show an alert
+  __weak IndigoGifPlugin* weakSelf = self;
+  dispatch_async(dispatch_get_main_queue(), ^{
+      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] message:NSLocalizedString(@"Access to the Photo Album has been denied. Please enable it in the Settings app to continue.", nil) preferredStyle:UIAlertControllerStyleAlert];
+      [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+          //[weakSelf sendNoPermissionResult:command.callbackId];
+      }]];
+      [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+          //[weakSelf sendNoPermissionResult:command.callbackId];
+      }]];
+      [weakSelf.viewController presentViewController:alertController animated:YES completion:nil];
+  });
+  CDVPluginResult* resulterror = [CDVPluginResult
+                                  resultWithStatus:CDVCommandStatus_ERROR
+                                  messageAsString:@"PhotoAlbumAccessIsDenied"];
+  [self.commandDelegate sendPluginResult:resulterror callbackId:callbackId];
 }
 
 @end
