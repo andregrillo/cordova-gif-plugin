@@ -12,7 +12,10 @@
 
 @implementation IndigoGifPlugin
 
+NSString *callbackId;
+
 - (void)saveGifToPhotoAlbum:(CDVInvokedUrlCommand*)command {
+    callbackId = command.callbackId;
     NSString *gifPath = [command.arguments objectAtIndex:0];
     NSURL *gifURL = [NSURL URLWithString:gifPath];
     NSData *data = [NSData dataWithContentsOfURL:gifURL];
