@@ -107,21 +107,21 @@ NSString *callbackId;
        // Access has been denied.
         [self showAlert];
   }
-  else if (status == PHAuthorizationStatusNotDetermined) {
-       // Access has not been determined.
-       [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-           if (status == PHAuthorizationStatusAuthorized) {
-               // Access has been granted.         
-           }
-           else {
+//  else if (status == PHAuthorizationStatusNotDetermined) {
+//       // Access has not been determined.
+//       [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+//           if (status == PHAuthorizationStatusAuthorized) {
+//               // Access has been granted.         
+//           }
+//           else {
                 // Denied; show an alert
-                [self showAlert];
-           }
-       }];  
-  }
-  else if (status == PHAuthorizationStatusRestricted) {
-       // Restricted access
-  }
+//                [self showAlert];
+//           }
+//       }];  
+//  }
+//  else if (status == PHAuthorizationStatusRestricted) {
+//       // Restricted access
+//  }
 }
 
 - (void) showAlert {
