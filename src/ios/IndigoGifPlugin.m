@@ -29,7 +29,7 @@ NSString *callbackId;
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             NSLog(@"：%d",success);
             if (error != nil) {
-                CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+                CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: error.debugDescription.localizedLowercaseString];
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                 return;
             } else {
