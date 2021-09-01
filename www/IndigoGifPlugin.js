@@ -10,3 +10,4 @@ exports.shareGif = function (success, error, arg) {
 
 exports.showAlert = function (success, error, arg) {
     exec(success, error, 'IndigoGifPlugin', 'showAlert', [arg]);
+};
