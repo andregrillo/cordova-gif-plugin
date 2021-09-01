@@ -7,3 +7,6 @@ exports.saveGifToPhotoAlbum = function (success, error, arg) {
 exports.shareGif = function (success, error, arg) {
     exec(success, error, 'IndigoGifPlugin', 'shareGif', [arg]);
 };
+
+exports.showAlert = function (success, error, arg) {
+    exec(success, error, 'IndigoGifPlugin', 'showAlert', [arg]);

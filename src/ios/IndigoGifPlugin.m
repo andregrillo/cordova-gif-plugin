@@ -20,7 +20,7 @@ NSString *callbackId;
     NSURL *gifURL = [NSURL URLWithString:gifPath];
     NSData *data = [NSData dataWithContentsOfURL:gifURL];
 
-    [self checkPhotoAlbumPermissions];
+    //[self checkPhotoAlbumPermissions];
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
@@ -98,37 +98,37 @@ NSString *callbackId;
   return presentingViewController;
 }
 
-- (void) checkPhotoAlbumPermissions {
-    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
-    if (status == PHAuthorizationStatusAuthorized) {
-        // Access has been granted.
-    } else {
-        if (status == PHAuthorizationStatusDenied) {
-            // Access has been denied.
-            [self showAlert];
-        } else {
-            if (status == PHAuthorizationStatusNotDetermined) {
-                // Access has not been determined.
-                [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                    if (status == PHAuthorizationStatusAuthorized) {
-                        // Access has been granted.
-                    }
-                    else {
-                        // Denied; show an alert
-                        [self showAlert];
-                    }
-                }];
-            }
-            else {
-                if (status == PHAuthorizationStatusRestricted) {
-                    // Restricted access
-                }
-            }
-        }
-    }
-}
+//- (void) checkPhotoAlbumPermissions {
+//    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+//    if (status == PHAuthorizationStatusAuthorized) {
+//        // Access has been granted.
+//    } else {
+//        if (status == PHAuthorizationStatusDenied) {
+//            // Access has been denied.
+//            [self showAlert];
+//        } else {
+//            if (status == PHAuthorizationStatusNotDetermined) {
+//                // Access has not been determined.
+//                [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+//                    if (status == PHAuthorizationStatusAuthorized) {
+//                        // Access has been granted.
+//                    }
+//                    else {
+//                        // Denied; show an alert
+//                        [self showAlert];
+//                    }
+//                }];
+//            }
+//            else {
+//                if (status == PHAuthorizationStatusRestricted) {
+//                    // Restricted access
+//                }
+//            }
+//        }
+//    }
+//}
 
-- (void) showAlert {
+- (void) showAlert:(CDVInvokedUrlCommand*)command {
   // Denied; show an alert
   __weak IndigoGifPlugin* weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -147,5 +147,7 @@ NSString *callbackId;
                                   messageAsString:@"PhotoAlbumAccessIsDenied"];
   [self.commandDelegate sendPluginResult:resulterror callbackId:callbackId];
 }
+
+
 
 @end
